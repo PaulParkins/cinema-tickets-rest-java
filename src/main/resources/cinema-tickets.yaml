@@ -82,7 +82,7 @@ components:
       properties:
         type:
           $ref: "#/components/schemas/TicketType"
-        count:
+        count:   # TODO: should this should be 'ticketCount' instead of 'count'?
           type: integer
           format: int64
           minimum: 0
@@ -99,14 +99,14 @@ components:
           minimum: 1
           nullable: false
           examples: [1234, 6789]
-        tickets:
+        tickets:   # TODO: should this should be 'ticketRequests' instead of 'tickets'?
           type: array
           nullable: false
           items:
             $ref: "#/components/schemas/TicketRequest"
       required:
         - accountId
-        - tickets
+        - tickets   # TODO: should this should be 'ticketRequests' instead of 'tickets'?
 
     BookingConfirmation:
       type: object
