@@ -48,6 +48,6 @@ public class CinemaTicketsServiceImpl implements CinemaTicketsService {
     paymentService.debitAccount(accountId, totalCost);
     seatReservationService.reserveSeats(accountId, seatCount);
 
-    return new BookingConfirmation(accountId);
+    return new BookingConfirmation(accountId, seatCount, totalCost);
   }
 }

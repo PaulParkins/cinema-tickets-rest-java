@@ -13,9 +13,20 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(InvalidBookingException.class)
-  protected ProblemDetail handleInvalidBookingException(final InvalidBookingException ex) {
-    final ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_IMPLEMENTED);
-    problemDetail.setDetail(ex.getMessage());
+  protected ProblemDetail handleInvalidBookingException(final InvalidBookingException exception) {
+    // Log but do not leak internal details in the problem detail response
+    logger.debug("InvalidBookingException caught", exception);
+    final ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+    problemDetail.setDetail(exception.getMessage());
     return problemDetail;
+  }
+
+  /**
+   * Catch-all Exception handler, to avoid any leaks, just in case.
+   */
+  @ExceptionHandler(Exception.class)
+  protected ProblemDetail handleOtherExceptions(final Exception exception) {
+    logger.error("Unexpected Exception caught", exception);
+    return ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

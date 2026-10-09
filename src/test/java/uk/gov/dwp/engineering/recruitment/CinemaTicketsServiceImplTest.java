@@ -51,7 +51,8 @@ class CinemaTicketsServiceImplTest {
     final var accountId = 82L;
     final var expectedCost = BigDecimal.valueOf(33.54);
     final var expectedReservedSeats = 3L;
-    final var expectedConfirmation = new BookingConfirmation(accountId);
+    final var expectedConfirmation =
+        new BookingConfirmation(accountId, expectedReservedSeats, expectedCost);
     final var ticketRequests = new TicketRequest[]{new TicketRequest(ADULT, 1)};
     final var bookingRequest = Map.of(ADULT, 1);
     when(bookingValidator.validate(eq(accountId), eq(ticketRequests))).thenReturn(bookingRequest);
